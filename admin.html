@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+        body {
+            background: url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgICAcHCAcHBwcHBwoHBwcHBw8ICQcKFREWIhUREx8YHSggGCYlGx8VITEhMSkrLi4uFx8zODMsNygtLisBCgoKDQ0NDg0NDy0ZFRktNystNy0rKy0rKysrKzcrKysrKysrKysrKysrKysrKysrKysrKysrKysrLSsrKystK//AABEIALcBEwMBIgACEQEDEQH/xAAbAAEBAQEBAAMAAAAAAAAAAAAAAQIDBAUGB//EABsQAQEBAQEAAwAAAAAAAAAAAAABEQISA1Fh/8QAGQEBAQEBAQEAAAAAAAAAAAAAAQACBAMF/8QAGxEBAQEBAAMBAAAAAAAAAAAAABEBEgITUQP/2gAMAwEAAhEDEQA/AP23FFcueJQUa5SCoIhFBuJAGYkFBymRUHKRGkHITEaQRM4jSKCsWJY3WauRWLGbHSxmw8isWM2OljNh5Fc7EsdLGbDFXOxLy6WM2KDpzvP4xeZ9O2JYuV083Xxz6cuvj/HsvLn1wOXp4/prxX459K9HgZ5evu36+xgOpgASEVAgAIRUEAAokKqCJBUogSpVBAyjSKBlGkUDKVpKYGKjSUxlipjaGCsWJjdTFBWMTG8MUFc7Gby64zYoq43kdMBD0+YAerpAEhFAkAUQAEgAQiogVKqACAgiLUqCJWkUDKNVKQzUaQxlmo0ligZTGsDAzhjWGIMYljeFiDng3iCJ8kA27AAIASQBARUCAAhAQEABKAgiVUqAioQiNIoGRUpZRFCERpEEMUKTEaRQMjQg9wCdoAgIAQAkgAAiokAgAlVEBFRARUQEWoQVKBCVFRAAIDASQUIRFSoIoIPaCB2KgJAIgqAECAACJAIAAiACEACCAhBUBAQCFAIEEQqoIRVQSlmgghXuAYd4IAAIgqAkIAAgICCIKgIUEEqAhAgiFVALNBAiqmiEVUE0s1dQRQVUEIoCGCveCPF3qgJAggAgAIIUEEKCCFBAighqFBNQwVdQQwVRBCgmmlmqiBFBAxmqIpVACEFEHsEHg+gCCFVBLUKCCFBE1CqmmohV1BNQqppqaYzV1E00ihqaiFUQMFXUQMZqpqaGDdXURYRVAIUFkRBRJAUB6BnTXi7qpqCFBE1CqhqamaqJqaYKpqJqgqpqaaWaupqJpgq6IKCqINQUE0UZ3RAIoAWasVFRFFkRJFWKmogqBRBRKNSrrnKuvJ0VvTWdNUVXTWdNIq6iampmrqamppFa1NTU1RmrprIYKuiBgqiBgqiBFBBM7oCoCmKkLi4sTWYSLISNJvMRTFDcQUCjIolHnnSzsGFV9r7Aqns9AlU9J6BCnpPQFmmpoEU00CKaaBZppoIU00EKaAkqgkqwE1jSwA3jUWIJ6YqgGhABAAn/2Q==') no-repeat center center fixed;
+            background-size: cover;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 250px;
+            background: #333;
+            color: #fff;
+            height: 100vh;
+            padding: 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #f0eded;
+        }
+
+        .menu-item {
+            padding: 15px;
+            margin: 10px 0;
+            background: #4bc2dd;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            transition: background 0.3s;
+        }
+
+        .menu-item:hover {
+            background: #545252;
+        }
+
+        .menu-item.active {
+            background: #ff6b6b;
+        }
+
+        .menu-item:last-child {
+            margin-top: 50px;
+        }
+
+        /* Main Content Styling */
+    .main-content {
+        margin-left: 450px; /* Adjusted for centered layout */
+        background: rgba(255, 255, 255, 0.9);
+        padding: 20px;
+        width: 900px;
+        height: 90vh; /* Adjusted for full container height */
+        border-radius: 15px;
+        box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+        overflow-y: auto; /* Ensure scroll if content overflows */
+    }
+
+        /* White Container */
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+            width: 80%; /* Set width of the container */
+            max-width: 900px; /* Max width for larger screens */
+            margin: 20px 0; /* Margin for spacing */
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            color: #333;
+        }
+
+        .header button {
+            padding: 10px 20px;
+            background: #ff6b6b;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+            padding: 15px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .team-label {
+            font-weight: bold;
+            background-color: #e6e6e6;
+        }
+
+        canvas {
+            max-width: 70%;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div>
+            <h2>Admin Dashboard</h2>
+            <div class="menu-item" id="tableBtn">Teams and Tasks</div>
+            <div class="menu-item" id="attendanceBtn">Attendance List</div>
+            <div class="menu-item" id="progressBtn">Task Statistics</div>
+        </div>
+        <div class="menu-item" id="logoutBtn">Log Out</div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Team Table Section -->
+        <section class="table__header">
+            
+        </section>
+
+        <!-- Team Table -->
+        <section class="table__body" id="teamSection">
+            <h1>Teams and Assigned Tasks</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Team</th>
+                        <th>Team Leader</th>
+                        <th>Member 1</th>
+                        <th>Member 2</th>
+                        <th>Member 3</th>
+                        <th>Member 4</th>
+                        <th>Task</th>
+                        <th>Deadline</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="team-label">Team 1</td>
+                        <td>Fang Leng</td>
+                        <td>Chai Xiao Qi</td>
+                        <td>Fang Lie</td>
+                        <td>Xiao Bu</td>
+                        <td>Jiang Xue</td>
+                        <td>Implement Login Feature</td>
+                        <td>2024-10-15</td>
+                        <td>In Progress</td>
+                    </tr>
+                    <tr>
+                        <td class="team-label">Team 2</td>
+                        <td>Gu Wei Yi</td>
+                        <td>Si Tu Mo</td>
+                        <td>Fu Pei</td>
+                        <td>Wang Shan</td>
+                        <td>Jiang</td>
+                        <td>Design Database Schema</td>
+                        <td>2024-10-20</td>
+                        <td>Pending</td>
+                    </tr>
+                    <tr>
+                        <td class="team-label">Team 3</td>
+                        <td>Zheng Shu Yi</td>
+                        <td>Shi Yan</td>
+                        <td>Guan Ji</td>
+                        <td>Bi Ruo Shan</td>
+                        <td>Yu You</td>
+                        <td>Develop API Endpoints</td>
+                        <td>Zheng Shu Yi</td>
+                        <td>Completed</td>
+                    </tr>
+                    <tr>
+                        <td class="team-label">Team 4</td>
+                        <td>Gu Rong Yan</td>
+                        <td>Su Jing Jing</td>
+                        <td>Ai Mi</td>
+                        <td>Xie Te</td>
+                        <td>Han Ran</td>
+                        <td>UI/UX Testing</td>
+                        <td>2024-10-22</td>
+                        <td>Pending</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+
+        <!-- Attendance Calendar Section -->
+        <section class="calendar-container" id="attendanceSection">
+            <h2>Employee Attendance Calendar - October 2024</h2>
+            <select id="employeeSelect">
+                <option value="Fang Leng">Fang Leng</option>
+                <option value="Chai Xiao Qi">Chai Xiao Qi</option>
+                <option value="Gu Wei Yi">Gu Wei Yi</option>
+                <option value="Si Tu Mo">Si Tu Mo</option>
+                <option value="Fu Pei">Fu Pei</option>
+                <option value="Fang Lie">Fang Lie</option>
+                <option value="Xiao Bu">Xiao Bu</option>
+                <option value="Jiang Xue">Jiang Xue</option>
+                <option value="Wang Shan">Wang Shan</option>
+                <option value="Jiang">Jiang</option>
+                <option value="Zheng Shu Yi">Zheng Shu Yi</option>
+                <option value="Shi Yan">Shi Yan</option>
+                <option value="Guan Ji">Guan Ji</option>
+                <option value="Bi Ruo Shan">Bi Ruo Shan</option>
+                <option value="Yu You">Yu You</option>
+                <option value="Gu Rong Yan">Gu Rong Yan</option>
+                <option value="Su Jing Jing">Su Jing Jing</option>
+                <option value="Ai Mi">Ai Mi</option>
+                <option value="Xie Te">Xie Te</option>
+                <option value="Han Ran">Han Ran</option>
+            </select>
+            <input type="date" id="dateInput">
+            <select id="statusSelect">
+                <option value="attendance">Present</option>
+                <option value="leave">Absent</option>
+                <option value="half-day">Half-Day</option>
+                <option value="full-day">Full-Day</option>
+            </select>
+            <button id="markAttendanceBtn">Mark Attendance</button>
+            <div class="calendar" id="attendanceCalendar"></div>
+        </section>
+
+        <!-- Task Statistics Chart -->
+        <section class="chart-container" id="chartSection">
+            <h2>Task Distribution by Leader - October 2024</h2>
+            <select id="leaderSelect">
+                <option value="Team 1">Fang Leng</option>
+                <option value="Team 2">Gu Wei Yi</option>
+                <option value="Team 3">Zheng Shu Yi</option>
+                <option value="Team 4">Gu Rong Yan</option>
+            </select>
+            <canvas id="taskPieChart"></canvas>
+        </section>
+
+        <!-- Attendance Statistics Chart -->
+        <section class="attendance-chart-container" id="attendanceChartSection" style="display: none;">
+            <h2>Attendance Statistics - October 2024</h2>
+            <canvas id="attendanceChart"></canvas>
+        </section>
+    </div>
+
+    <script>
+        // Toggle Sections Visibility Based on Menu Item Click
+        document.getElementById("tableBtn").addEventListener("click", () => {
+            showSection("teamSection");
+        });
+
+        document.getElementById("attendanceBtn").addEventListener("click", () => {
+            showSection("attendanceSection");
+        });
+
+        document.getElementById("progressBtn").addEventListener("click", () => {
+            showSection("chartSection");
+        });
+
+        function showSection(sectionId) {
+            document.getElementById("teamSection").style.display = "none";
+            document.getElementById("attendanceSection").style.display = "none";
+            document.getElementById("chartSection").style.display = "none";
+            document.getElementById("attendanceChartSection").style.display = "none"; // Hide the new chart section
+
+            document.getElementById(sectionId).style.display = "block";
+        }
+
+        // Initialize the visibility
+        showSection("teamSection");
+
+        // Task Statistics Chart Setup
+        const ctx = document.getElementById('taskPieChart').getContext('2d');
+        const leaderData = {
+            "Team 1": [50, 30, 20],
+            "Team 2": [60, 20, 20],
+            "Team 3": [40, 40, 20],
+            "Team 4": [30, 50, 20]
+        };
+
+        let taskPieChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Completed', 'In Progress', 'Pending'],
+                datasets: [{
+                    data: leaderData["Team 1"],
+                    backgroundColor: ['#4caf50', '#ff9800', '#f44336']
+                }]
+            }
+        });
+
+        document.getElementById('leaderSelect').addEventListener('change', (event) => {
+            taskPieChart.data.datasets[0].data = leaderData[event.target.value];
+            taskPieChart.update();
+        });
+
+        // Attendance Statistics Chart Setup
+        const attendanceCtx = document.getElementById('attendanceChart').getContext('2d');
+        const attendanceData = {
+            labels: ['Fang Leng', 'Chai Xiao Qi', 'Gu Wei Yi', 'Si Tu Mo', 'Fu Pei', 'Fang Lie', 'Xiao Bu', 'Jiang Xue', 'Wang Shan', 'Jiang', 'Zheng Shu Yi', 'Shi Yan', 'Guan Ji', 'Bi Ruo Shan', 'Yu You', 'Gu Rong Yan', 'Su Jing Jing', 'Ai Mi', 'Xie Te', 'Han Ran'],
+            datasets: [{
+                label: 'Attendance Status',
+                data: [22, 20, 23, 18, 19, 24, 21, 22, 25, 21, 19, 20, 22, 20, 21, 24, 22, 20, 19, 21], // Example attendance data for 20 days in October
+                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 2
+            }]
+        };
+
+        let attendanceChart = new Chart(attendanceCtx, {
+            type: 'bar',
+            data: attendanceData,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Days Present'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Employees'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Show attendance chart section when the attendance button is clicked
+        document.getElementById("attendanceBtn").addEventListener("click", () => {
+            document.getElementById("attendanceChartSection").style.display = "block";
+            attendanceChart.update();
+        });
+    </script>
+</body>
+</html>

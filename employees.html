@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Dashboard</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: sans-serif;
+    }
+
+    body {
+        background: url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgICAcHCAcHBwcHBwoHBwcHBw8ICQcKFREWIhUREx8YHSggGCYlGx8VITEhMSkrLi4uFx8zODMsNygtLisBCgoKDQ0NDg0NDy0ZFRktNystNy0rKy0rKysrKzcrKysrKysrKysrKysrKysrKysrKysrKysrKysrLSsrKystK//AABEIALcBEwMBIgACEQEDEQH/xAAbAAEBAQEBAAMAAAAAAAAAAAAAAQIDBAUGB//EABsQAQEBAQEAAwAAAAAAAAAAAAABEQISA1Fh/8QAGQEBAQEBAQEAAAAAAAAAAAAAAQACBAMF/8QAGxEBAQEBAAMBAAAAAAAAAAAAABEBEgITUQP/2gAMAwEAAhEDEQA/AP23FFcueJQUa5SCoIhFBuJAGYkFBymRUHKRGkHITEaQRM4jSKCsWJY3WauRWLGbHSxmw8isWM2OljNh5Fc7EsdLGbDFXOxLy6WM2KDpzvP4xeZ9O2JYuV083Xxz6cuvj/HsvLn1wOXp4/prxX459K9HgZ5evu36+xgOpgASEVAgAIRUEAAokKqCJBUogSpVBAyjSKBlGkUDKVpKYGKjSUxlipjaGCsWJjdTFBWMTG8MUFc7Gby64zYoq43kdMBD0+YAerpAEhFAkAUQAEgAQiogVKqACAgiLUqCJWkUDKNVKQzUaQxlmo0ligZTGsDAzhjWGIMYljeFiDng3iCJ8kA27AAIASQBARUCAAhAQEABKAgiVUqAioQiNIoGRUpZRFCERpEEMUKTEaRQMjQg9wCdoAgIAQAkgAAiokAgAlVEBFRARUQEWoQVKBCVFRAAIDASQUIRFSoIoIPaCB2KgJAIgqAECAACJAIAAiACEACCAhBUBAQCFAIEEQqoIRVQSlmgghXuAYd4IAAIgqAkIAAgICCIKgIUEEqAhAgiFVALNBAiqmiEVUE0s1dQRQVUEIoCGCveCPF3qgJAggAgAIIUEEKCCFBAighqFBNQwVdQQwVRBCgmmlmqiBFBAxmqIpVACEFEHsEHg+gCCFVBLUKCCFBE1CqmmohV1BNQqppqaYzV1E00ihqaiFUQMFXUQMZqpqaGDdXURYRVAIUFkRBRJAUB6BnTXi7qpqCFBE1CqhqamaqJqaYKpqJqgqpqaaWaupqJpgq6IKCqINQUE0UZ3RAIoAWasVFRFFkRJFWKmogqBRBRKNSrrnKuvJ0VvTWdNUVXTWdNIq6iampmrqamppFa1NTU1RmrprIYKuiBgqiBgqiBFBBM7oCoCmKkLi4sTWYSLISNJvMRTFDcQUCjIolHnnSzsGFV9r7Aqns9AlU9J6BCnpPQFmmpoEU00CKaaBZppoIU00EKaAkqgkqwE1jSwA3jUWIJ6YqgGhABAAn/2Q==') no-repeat center center fixed;
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    /* Sidebar Styling */
+    .sidebar {
+        width: 250px;
+        background: rgba(51, 51, 51, 0.9);
+        color: #fff;
+        height: 90vh;
+        padding: 20px;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+
+    .sidebar h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #f4f0f0;
+    }
+
+    .menu-item {
+        padding: 15px;
+        margin: 10px 0;
+        background: #28c5ec;
+        border-radius: 5px;
+        cursor: pointer;
+        text-align: center;
+        transition: background 0.3s;
+    }
+
+    .menu-item:hover {
+        background: #545252;
+    }
+
+    .menu-item.active {
+        background: #e9e2e2;
+    }
+
+    .menu-item:last-child {
+        margin-top: 50px;
+    }
+
+    /* Main Content Styling */
+    .main-content {
+        margin-left: 300px; /* Adjusted for centered layout */
+        background: rgba(255, 255, 255, 0.9);
+        padding: 20px;
+        width: 800px;
+        height: 90vh; /* Adjusted for full container height */
+        border-radius: 15px;
+        box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+        overflow-y: auto; /* Ensure scroll if content overflows */
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .header h1 {
+        color: #333;
+    }
+
+    .header button {
+        padding: 10px 20px;
+        background: #2bb3e9;
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .table_header, .calendar-container, .chart-container, .leave-container {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+        margin-bottom: 30px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    table, th, td {
+        border: 1px solid #ddd;
+        padding: 15px;
+        text-align: center;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    canvas {
+        max-width: 100%;
+    }
+
+    button {
+        padding: 10px 20px;
+        margin-top: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+    }
+</style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div>
+            <h2>Employee Dashboard</h2>
+            <div class="menu-item" id="detailsBtn">Employee Details</div>
+            <div class="menu-item" id="attendanceBtn">Attendance</div>
+            <div class="menu-item" id="leaveBtn">Apply for Leave</div>
+            <div class="menu-item" id="progressBtn">Attendance Statistics</div>
+        </div>
+        <div class="menu-item" id="logoutBtn">Log Out</div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+       
+        
+        <section class="table__header" id="employeeDetailsSection">
+            <h1>Employee Details</h1>
+            <table>
+                <tbody>
+                 <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Employee ID</th>
+                        <th>Salary</th>
+                        <th>Position</th>
+                        <th>Manager</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Fang Leng</td>
+                        <td>EMP001</td>
+                        <td>$60,000</td>
+                        <td>Software Engineer</td>
+                        <td>Han Shangyan</td>
+                    </tr>
+                    <tr>
+                        <td>Chai Xiao Qi</td>
+                        <td>EMP002</td>
+                        <td>$55,000</td>
+                        <td>Data Analyst</td>
+                        <td>Han Shangyan</td>
+                    </tr>
+                    <tr>
+                        <td>Gu Wei Yi</td>
+                        <td>EMP003</td>
+                        <td>$70,000</td>
+                        <td>Team Leader</td>
+                        <td>Han Shangyan</td>
+                    </tr>
+                    <tr>
+                        <td>Si Tu Mo</td>
+                        <td>EMP004</td>
+                        <td>$50,000</td>
+                        <td>UX Designer</td>
+                        <td>Han Shangyan</td>
+                    </tr>
+                    <tr>
+                        <td>Fang Lie</td>
+                        <td>EMP005</td>
+                        <td>$560,000</td>
+                        <td>Data Analyst</td>
+                        <td>Han Shangyan</td>
+                    </tr>
+                    <tr>
+                        <td>Fu Pei</td>
+                        <td>EMP006</td>
+                        <td>$55,000</td>
+                        <td>UX Designer</td>
+                        <td>Han Shangyan</td>
+                    </tr>
+                    <tr>
+                        <td>Xiao Bu</td>
+                        <td>EMP007</td>
+                        <td>$40,000</td>
+                        <td>UX Designer</td>
+                        <td>Han Shangyan</td>
+                    </tr>
+                    <tr>
+                        <td>Jiang Xue</td>
+                        <td>EMP008</td>
+                        <td>$80,000</td>
+                        <td>Software Engineer</td>
+                        <td>Han Shangyan</td>
+                    </tr>
+                    <tr>
+                        <td>Wang Shan</td>
+                        <td>EMP009</td>
+                        <td>$60,000</td>
+                        <td>UX Designer</td>
+                        <td>Han Shangyan</td>
+                    </tr>
+                    <tr>
+                        <td>Jiang</td>
+                        <td>EMP0010</td>
+                        <td>$50,000</td>
+                        <td>Data Analyst</td>
+                        <td>Han Shangyan</td>
+                    </tr>
+                    <tr>
+                        <td>Zheng Shu Yi</td>
+                        <td>EMP0011</td>
+                        <td>$76,000</td>
+                        <td>Software Engineer</td>
+                        <td>Han Shangyan</td>
+                    </tr>
+                    <tr>
+                        <td>Shi Yan</td>
+                        <td>EMP0012</td>
+                        <td>$57,000</td>
+                        <td>Data Analyst</td>
+                        <td>Han Shangyan</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Guan Ji</td>
+                        <td>EMP0013</td>
+                        <td>$50,000</td>
+                        <td>UX Designer</td>
+                        <td>Han Shangyan</td>
+                    </tr>
+                    <tr>
+                        <td>Bi Ruo Shan</td>
+                        <td>EMP0014</td>
+                        <td>$60,000</td>
+                        <td>UX Designer</td>
+                        <td>Han Shangyan</td>
+                    </tr>
+                    <tr>
+                        <td>Yu Yan</td>
+                        <td>EMP0015</td>
+                        <td>$80,000</td>
+                        <td>Software Engineer</td>
+                        <td>Han Shangyan</td>
+                    </tr>
+                    <tr>
+                        <td>Gu Rong Yan</td>
+                        <td>EMP0016</td>
+                        <td>$50,000</td>
+                        <td>Data Analyst</td>
+                        <td>Han Shangyan</td>
+                    </tr>
+                    <tr>
+                        <td>Su Jing Jing</td>
+                        <td>EMP0017</td>
+                        <td>$50,000</td>
+                        <td>UX Designer</td>
+                        <td>Han Shangyan</td>
+                    </tr>
+                    <tr>
+                        <td>Han Ran</td>
+                        <td>EMP0018</td>
+                        <td>$45,000</td>
+                        <td>UX Designer</td>
+                        <td>Han Shangyan</td>
+                    </tr>
+                    <tr>
+                        <td>Ai Mi</td>
+                        <td>EMP0019</td>
+                        <td>$70,000</td>
+                        <td>Software Engineer</td>
+                        <td>Han Shangyan</td>
+                    </tr>
+                    <tr>
+                        <td>Xie Te</td>
+                        <td>EMP0020</td>
+                        <td>$40,000</td>
+                        <td>UX Designer</td>
+                        <td>Han Shangyan</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Attendance Section -->
+        <section  id="attendanceSection" style="display: none;">
+            <h2>Mark Attendance - October 2024</h2>
+
+
+            <form>
+                <label for="employeeName">Employee Name</label>
+                <input type="text" id="employeeName" name="employeeName" required>
+        
+            
+    
+                <label for="employeeId">Employee ID</label>
+                <input type="text" id="employeeId" name="employeeId" required>
+    
+                <label for="attendanceDate">Date</label>
+                <input type="date" id="attendanceDate" name="attendanceDate" required>
+    
+                <button type="submit">Submit Attendance</button>
+            </form>
+             
+            
+           
+            
+        </section>
+
+        <!-- Leave Application Section -->
+        <section id="leaveSection" style="display: none;">
+            <h2>Apply for Leave</h2>
+            <style>
+                * {
+                    margin: 0;
+                    padding: 0;
+                    box-sizing: border-box;
+                    font-family: 'Poppins', sans-serif;
+                }
+               
+                .container {
+                    width: 400px; /* Adjust width as needed */
+                    background: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
+                    padding: 40px 30px;
+                    border-radius: 10px;
+                    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+                }
+                .container h2 {
+                    text-align: center;
+                    color: #333;
+                    margin-bottom: 30px;
+                }
+                .form-group {
+                    margin-bottom: 20px; /* Space between form elements */
+                }
+                label {
+                    display: block; /* Makes the label take the full width */
+                    margin-bottom: 5px;
+                    color: #555; /* Label color */
+                }
+                input[type="text"],
+                input[type="number"],
+                textarea,
+                input[type="date"] {
+                    width: 100%; /* Full width */
+                    padding: 10px;
+                    border: 1px solid #ccc; /* Border style */
+                    border-radius: 5px; /* Rounded corners */
+                }
+                textarea {
+                    resize: none; /* Prevent resizing */
+                    height: 80px; /* Fixed height for textarea */
+                }
+                button {
+                    width: 100%;
+                    padding: 10px;
+                    background-color: #007bff; /* Button background color */
+                    color: #fff; /* Text color */
+                    border: none; /* No border */
+                    border-radius: 5px; /* Rounded corners */
+                    cursor: pointer; /* Pointer on hover */
+                    transition: 0.3s; /* Transition effect */
+                }
+                button:hover {
+                    background-color: #0056b3; /* Button hover color */
+                }
+            </style>
+
+            <form>
+                <div class="form-group">
+                    <label for="employeeName">Employee Name:</label>
+                    <input type="text" id="employeeName" name="employeeName" required>
+                </div>
+                <div class="form-group">
+                    <label for="employeeId">Employee ID:</label>
+                    <input type="number" id="employeeId" name="employeeId" required>
+                </div>
+                <div class="form-group">
+                    <label for="reason">Reason for Leave:</label>
+                    <textarea id="reason" name="reason" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="leaveDate">Date of Leave:</label>
+                    <input type="date" id="leaveDate" name="leaveDate" required>
+                </div>
+                <button type="submit">Submit Application</button>
+            </form>
+        </section>
+
+        <!-- Attendance Statistics Chart -->
+        <section class="chart-container" id="attendanceChartSection">
+            <h2>Attendance Statistics - October 2024</h2>
+            <canvas id="attendanceChart"></canvas>
+        </section>
+    </div>
+
+    <script>
+        // Toggle Sections Visibility Based on Menu Item Click
+        document.getElementById("detailsBtn").addEventListener("click", () => {
+            showSection("employeeDetailsSection");
+        });
+
+        document.getElementById("attendanceBtn").addEventListener("click", () => {
+            showSection("attendanceSection");
+        });
+
+        document.getElementById("leaveBtn").addEventListener("click", () => {
+            showSection("leaveSection");
+        });
+
+        document.getElementById("progressBtn").addEventListener("click", () => {
+            showSection("attendanceChartSection");
+        });
+
+        function showSection(sectionId) {
+            document.getElementById("employeeDetailsSection").style.display = "none";
+            document.getElementById("attendanceSection").style.display = "none";
+            document.getElementById("leaveSection").style.display = "none";
+            document.getElementById("attendanceChartSection").style.display = "none";
+
+            document.getElementById(sectionId).style.display = "block";
+        }
+
+        // Initialize the visibility
+        showSection("employeeDetailsSection");
+
+        // Attendance Statistics Chart Setup with More Employees
+        const attendanceCtx = document.getElementById('attendanceChart').getContext('2d');
+        const attendanceData = {
+            labels: [
+                'Fang Leng', 'Chai Xiao Qi', 'Gu Wei Yi', 'Si Tu Mo', 'Fu Pei', 'Fang Lie',
+                'Xiao Bu', 'Jiang Xue', 'Wang Shan', 'Jiang', 'Zheng Shu Yi', 'Shi Yan'
+            ],
+            datasets: [{
+                label: 'Days Present',
+                data: [22, 20, 23, 18, 21, 19, 17, 22, 20, 19, 18, 16], // Example attendance data
+                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        };
+
+        let attendanceChart = new Chart(attendanceCtx, {
+            type: 'bar',
+            data: attendanceData,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Days Present'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Employees'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Mark Attendance Button Logic
+        document.getElementById("markAttendanceBtn").addEventListener("click", () => {
+            const employee = document.getElementById("employeeSelect").value;
+            const date = document.getElementById("dateInput").value;
+            const status = document.getElementById("statusSelect").value;
+            alert(`Attendance marked: ${employee} on ${date} is ${status}.`);
+        });
+    </script>
+</body>
+</html>
